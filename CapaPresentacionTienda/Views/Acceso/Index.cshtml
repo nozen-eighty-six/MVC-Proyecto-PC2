@@ -1,0 +1,86 @@
+﻿
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Index</title>
+	<link href="~/Content/Sites.css" rel="stylesheet" />
+	<link href="~/Content/pruebaLogin.css" rel="stylesheet" />
+</head>
+<body>
+	<!-- Main Content -->
+	<div class="container-fluid">
+		<div class="row main-content bg-success text-center">
+			<div class="col-md-4 text-center company__info" id="contenImg">
+				<img src="~/Models/logo.jpeg" id="imgLogo" />
+			</div>
+			<div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+				<div class="container-fluid">
+					<div class="row">
+						<h2>Login</h2>
+					</div>
+					<div class="row">
+						<form action="@Url.Action("Index","Acceso")" , method="post">
+							<div class="form-floating mb-3">
+								<input class="form-control" name="correo" type="email" autocomplete="off" placeholder="Email" />
+								<label for="inputEmail">Email </label>
+							</div>
+							<div class="form-floating mb-3">
+								<input class="form-control" name="clave" type="password" autocomplete="off" placeholder="Contraseña" />
+								<label for="inputPassword">Contraseña</label>
+							</div>
+							@{
+								if (ViewBag.Error != null)
+								{
+									<div class="form-floating mb-3">
+										<div class="alert alert-danger" role="alert">
+											@ViewBag.Error
+										</div>
+									</div>
+								}
+
+							}
+
+							<div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+								<a class="small" href="@Url.Action("Restablecer","Acceso")">¿Has olvidado tu contraseña?</a>
+								<button class="btn" type="submit">Ingresar</button>
+							</div>
+						</form>
+					</div>
+					<div class="card-footer text-center py-3">
+						<div class="small"><a href="@Url.Action("Registrar","Acceso")">¿No tienes una cuenta? ¡Registrate!</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		// Obtenemos el div y la imagen por sus IDs
+		const div = document.getElementById('contenImg');
+		const imagen = document.getElementById('imgLogo');
+
+		// Función para ajustar la imagen al tamaño del div
+		function ajustarImagen() {
+			const divAncho = div.offsetWidth;
+			const divAlto = div.offsetHeight;
+
+			// Establecemos el tamaño de la imagen igual al tamaño del div
+			imagen.style.width = divAncho + 'px';
+			imagen.style.height = divAlto + 'px';
+		}
+
+		// Llamamos a la función al cargar la página y cada vez que cambie el tamaño del div
+		ajustarImagen();
+		window.addEventListener('resize', ajustarImagen);
+
+
+
+	</script>
+</body>
+</html>
+

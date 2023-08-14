@@ -1,0 +1,12 @@
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaIdentidad\obj\Debug\CapaIdentidad.csprojAssemblyReference.cache
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaIdentidad\obj\Debug\CapaIdentidad.csproj.CoreCompileInputs.cache
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaIdentidad\bin\Debug\CapaIdentidad.dll
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaIdentidad\bin\Debug\CapaIdentidad.pdb
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaIdentidad\obj\Debug\CapaIdentidad.dll
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaIdentidad\obj\Debug\CapaIdentidad.pdb
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaIdentidad\bin\Debug\CapaIdentidad.dll
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaIdentidad\bin\Debug\CapaIdentidad.pdb
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaIdentidad\obj\Debug\CapaIdentidad.csprojAssemblyReference.cache
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaIdentidad\obj\Debug\CapaIdentidad.csproj.CoreCompileInputs.cache
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaIdentidad\obj\Debug\CapaIdentidad.dll
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaIdentidad\obj\Debug\CapaIdentidad.pdb

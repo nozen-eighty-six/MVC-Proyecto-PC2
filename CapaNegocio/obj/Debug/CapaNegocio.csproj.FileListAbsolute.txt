@@ -1,0 +1,26 @@
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaNegocio\obj\Debug\CapaNegocio.csprojAssemblyReference.cache
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaNegocio\obj\Debug\CapaNegocio.csproj.CoreCompileInputs.cache
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaNegocio\bin\Debug\CapaNegocio.dll
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaNegocio\bin\Debug\CapaNegocio.pdb
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaNegocio\bin\Debug\CapaDatos.dll
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaNegocio\bin\Debug\CapaIdentidad.dll
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaNegocio\bin\Debug\CapaDatos.pdb
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaNegocio\bin\Debug\CapaIdentidad.pdb
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaNegocio\obj\Debug\CapaNegocio.csproj.CopyComplete
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaNegocio\obj\Debug\CapaNegocio.dll
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaNegocio\obj\Debug\CapaNegocio.pdb
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaNegocio\bin\Debug\Newtonsoft.Json.dll
+D:\Cursos - 4TO Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Solucion\MVC\CapaNegocio\bin\Debug\Newtonsoft.Json.xml
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaNegocio\bin\Debug\CapaNegocio.dll
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaNegocio\bin\Debug\CapaNegocio.pdb
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaNegocio\bin\Debug\CapaDatos.dll
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaNegocio\bin\Debug\CapaIdentidad.dll
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaNegocio\bin\Debug\Newtonsoft.Json.dll
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaNegocio\bin\Debug\CapaDatos.pdb
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaNegocio\bin\Debug\CapaIdentidad.pdb
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaNegocio\bin\Debug\Newtonsoft.Json.xml
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaNegocio\obj\Debug\CapaNegocio.csprojAssemblyReference.cache
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaNegocio\obj\Debug\CapaNegocio.csproj.CoreCompileInputs.cache
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaNegocio\obj\Debug\CapaNegocio.csproj.CopyComplete
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaNegocio\obj\Debug\CapaNegocio.dll
+D:\Cursos-4TO-Ciclo\Proyecto Certificador de Desarrollo de Software 2\Proyecto Final\Configurando\MVC\CapaNegocio\obj\Debug\CapaNegocio.pdb

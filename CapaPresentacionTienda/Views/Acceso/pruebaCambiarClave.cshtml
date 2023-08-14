@@ -1,0 +1,105 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>pruebaCambiarClave</title>
+	<link href="~/Content/Sites.css" rel="stylesheet" />
+	<link href="~/Content/loginCambiarClav.css" rel="stylesheet" />
+</head>
+<body>
+	<!-- Main Content -->
+	<div class="container-fluid">
+		<div class="row main-content bg-success text-center">
+			<div class="col-md-5 text-center company__info" id="contenImg">
+				<img src="~/Models/logo.jpeg" id="imgLogo" />
+			</div>
+			<div class="col-md-7 col-xs-12 col-sm-12 login_form ">
+				<div class="container-fluid">
+					<div class="row">
+						<h2>Login</h2>
+					</div>
+					<div class="row mt-2">
+
+						<form action="@Url.Action("CambiarClave","Acceso")" method="post">
+							<input class="form-control" type="hidden" name="idcliente" value="@TempData["IdCliente"]" />
+							<div class="row mb-3">
+								<div class="col-md-12">
+									<div class="form-floating mb-3 mb-md-0">
+										<input class="form-control" name="claveactual" type="password" placeholder="Ingrese Contraseña Actual" value="@ViewData["vclave"]" />
+										<label for="inputPassword">Contraseña Actual</label>
+									</div>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<div class="col-md-12">
+									<div class="form-floating mb-3 mb-md-0">
+										<input class="form-control" name="clavenueva" type="password" placeholder="Ingrese Contraseña Nueva" />
+										<label for="inputPassword">Nueva Contraseña</label>
+									</div>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<div class="col-md-12">
+									<div class="form-floating mb-3 mb-md-0">
+										<input class="form-control" name="confirmarclave" type="password" placeholder="Ingrese de nuevo la contraseña" />
+										<label for="inputPassword">Confirmar Nueva Contraseña</label>
+									</div>
+								</div>
+							</div>
+							@{
+								if (ViewBag.Error != null)
+								{
+									<div class="row mb-3">
+										<div class="col-md-12">
+											<div class="form-floating mb-3 mb-md-0">
+												<div class="alert alert-danger" role="alert">
+													@ViewBag.Error
+												</div>
+											</div>
+										</div>
+									</div>
+								}
+
+							}
+							<div class="mt-4 mb-0 d-flex justify-content-center">
+								<button class="btn btn-block" type="submit">Cambiar Contraseña</button>
+							</div>
+						</form>
+					</div>
+					<div class="card-footer text-center py-3">
+						<div class="small"><a href="@Url.Action("Index", "Acceso")">Volver</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		// Obtenemos el div y la imagen por sus IDs
+		const div = document.getElementById('contenImg');
+		const imagen = document.getElementById('imgLogo');
+
+		// Función para ajustar la imagen al tamaño del div
+		function ajustarImagen() {
+			const divAncho = div.offsetWidth;
+			const divAlto = div.offsetHeight;
+
+			// Establecemos el tamaño de la imagen igual al tamaño del div
+			imagen.style.width = divAncho + 'px';
+			imagen.style.height = divAlto + 'px';
+		}
+
+		// Llamamos a la función al cargar la página y cada vez que cambie el tamaño del div
+		ajustarImagen();
+		window.addEventListener('resize', ajustarImagen);
+
+
+
+	</script>
+</body>
+</html>

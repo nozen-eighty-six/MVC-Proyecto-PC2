@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+	<style>
+
+		ul.navbar-nav{
+			margin-right:160px;
+
+
+		}
+	</style>
+ 
+</head>
+<body class="d-flex flex-column min-vh-100">
+	<!-- Navigation-->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid px-4 ">
+			<a class="navbar-brand" href="#!">Mi tienda</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="@Url.Action("Index","Tienda")">Inicio</a></li>
+					<li class="nav-item dropdown custom-dropdown" >
+						<a class="nav-link dropdown-toggle" href="#" id="submenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Categorias
+						</a>
+						<!-- Lista anidada para el submenú -->
+						<div class="dropdown-menu enlacesPrinc" id="mostrarCatego"aria-labelledby="navbarDropdown" >
+						</div>
+					</li>
+					@*<li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+			<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+				<li><a class="dropdown-item" href="#!">All Products</a></li>
+				<li><hr class="dropdown-divider" /></li>
+				<li><a class="dropdown-item" href="#!">Popular Items</a></li>
+				<li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+			</ul>
+		</li>*@
+				</ul>
+				<form class="d-flex">
+					@*//Cosas que se deben de mostrar si no se inicia sesión*@
+					@if (Session["Cliente"] == null)
+					{
+						<a class="btn btn-outline-dark" aria-current="page" href="@Url.Action("Index","Acceso")"><i class="fas fa-sign-out-alt me-1"></i>Iniciar Sesión</a>
+					}
+					else
+					{
+						<a class="btn btn-outline-dark me-2" href="@Url.Action("Carrito","Tienda")">
+							@*//Ver Lista que ha seleccionado de Productos*@
+							<i class="fas fa-shopping-cart me-1"></i>
+							Cart
+							<span class="badge bg-dark text-white ms-1 rounded-pill" id="cantidadcarrito">0</span>
+						</a>
+
+						<ul class="navbar-nav">
+							<li class="nav-item  dropdown dropdown-menu-start">
+								<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+								<ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
+									<li><a class="dropdown-item" href="#!"><b>@User.Identity.Name</b></a></li>
+									<li><a class="dropdown-item" href="@Url.Action("MisCompras","Tienda")">Mis compras</a></li>
+
+									<li><hr class="dropdown-divider" /></li>
+									<li><a class="dropdown-item" href="@Url.Action("CerrarSesion", "Acceso")">Cerrar Sesión</a></li>
+								</ul>
+							</li>
+						</ul>
+					}
+
+				</form>
+			</div>
+		</div>
+	</nav>
+	@*/*Lo que permitirá heredar los diseños*/*@
+	@RenderBody()
+	<footer>
+		<p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+	</footer>
+
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
+	@RenderSection("scripts", required: false)
+	<script>
+		$(document).ready(function () {
+			MostrarCantidadCarrito();
+			// Inicializar el comportamiento de "hover" para el submenú
+			listar();
+			
+			
+		}
+
+
+		)
+		
+		function listar() {
+			// Obtener todos los elementos con la clase "dropdown"
+			var dropdowns = document.querySelectorAll(".dropdown");
+
+			// Agregar el evento "mouseenter" (al pasar el cursor) a cada elemento "dropdown"
+			dropdowns.forEach(function (dropdown) {
+				dropdown.addEventListener("mouseenter", function () {
+					this.classList.add("show");
+					this.querySelector(".dropdown-menu").classList.add("show");
+				});
+
+				// Agregar el evento "mouseleave" (al salir del cursor) a cada elemento "dropdown"
+				dropdown.addEventListener("mouseleave", function () {
+					this.classList.remove("show");
+					this.querySelector(".dropdown-menu").classList.remove("show");
+				});
+			});
+
+
+		}
+		@*<li class="nav-item"><a class="nav-link active" aria-current="page" href="@Url.Action("Index","Tienda")">Inicio</a></li>*@
+		$("<li>").addClass("nav-item").append(
+			$("<a>").addClass("nav-link active").attr({ "aria-current": "page", "href": "#" }).text("Categorias"));
+
+		function MostrarCantidadCarrito() {
+			if ($("#cantidadcarrito").length > 0) {
+				jQuery.ajax({
+					url: "@Url.Action("CantidadEnCarrito", "Tienda")",
+					type: "GET",
+					dataType: "json",
+					contentType: "application/json; charset=utf-8",
+					success: function (data) {
+						$("#cantidadcarrito").text(data.cantidad);
+					}
+
+
+
+				});
+				
+			}
+		}
+
+
+
+	</script>
+</body>
+</html>

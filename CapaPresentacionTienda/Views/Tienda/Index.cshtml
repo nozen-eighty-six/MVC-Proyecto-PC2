@@ -1,0 +1,710 @@
+﻿
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/tiendaStyle.css" rel="stylesheet" />
+<style>
+	.dropdown-menu.start {
+		right: auto;
+		left: 100%;
+		top: 0;
+		transform: translateX(0);
+	}
+
+	#contenProduct img {
+		object-fit: cover;
+	}
+	
+	.bgImg {
+		background-image: url('~/Models/Fondo.jpeg'); /* Ruta de tu imagen de fondo */
+		background-size: cover; /* Ajusta la imagen para cubrir el div */
+		background-position: center center; /* Posición de la imagen en el div */
+		background-repeat: no-repeat;
+		
+	}
+	#ContenedorImg {
+		position: relative;
+		overflow: hidden;
+	}
+	#bgImg {
+		width: 100%;
+		height: 100%;
+		opacity:0.9;
+		object-fit: cover;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1; /* Envía la imagen al fondo */
+	}
+	#contenido {
+		position: relative;
+		z-index: 1;
+	}
+</style>
+<!-- Header-->
+<header id="fondoVerde"class="py-5">
+	<div class="container px-4 px-lg-5 my-5 position-relative">
+		<div class="text-center text-white">
+			<h1 class="display-4 fw-bolder">Compra con estilo</h1>
+			<p class="lead fw-normal text-white-50 mb-0">Encuentra los mejores productos</p>
+		</div>
+	</div>
+</header>
+
+
+
+
+<section>
+	<div class="container px-5 my-5">
+		<div class="row" id="ContenedorImg">
+			<img src="~/Models/Fondo.jpeg" id="bgImg"/>
+			<div class="col-sm-12" id="contenido">
+				<div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+					<!-- Indicators/dots -->
+					<div class="carousel-indicators mt-5" id="contenedorindicador">
+
+					</div>
+
+					<!-- The slideshow/carousel -->
+					<div class="carousel-inner mb-3" id="contentContenido">
+
+
+						@*<div class="row carousel-item active" id="contentSuperiorProducto" >
+								<div class="col-sm-6 m-0 p-0 overflow-hidden" id="contenProduct">
+
+								</div>
+
+								<div class="col-sm-5 d-flex justify-content-start" id="contentInfo">
+									<div id="informacionProd" class="d-flex flex-column flex-grow-1 m-auto align-items-center">
+
+									</div>
+
+								</div>
+							</div>*@
+						@*<img src="la.jpg" alt="Los Angeles" class="d-block" style="width:100%">
+							<div class="carousel-caption">
+								<h3>Los Angeles</h3>
+								<p>We had such a great time in LA!</p>
+							</div>*@
+
+
+					</div>
+
+					<!-- Left and right controls/icons -->
+					<button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon"></span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+						<span class="carousel-control-next-icon"></span>
+					</button>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid px-5 my-5">
+		<div class="row">
+
+			<div class="col-sm-12 mt-2">
+				<div class="text-center text-black mb-2">
+					<h1 class="display-4 fw-bolder">Productos Disponibles</h1>
+
+				</div>
+				<div id="contenedor_producto" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 mt-2 row-cols-xl-4 justify-content-center">
+
+				</div>
+
+
+			</div>
+
+
+
+
+		</div>
+
+	</div>
+</section>
+<!-- Modal -->
+<div class="modal fade" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header bg-dark text-white">
+				<h5 class="modal-title" id="exampleModalLabel">Producto</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body ">
+				<div class="row gx-4 gx-lg-5 align-items-center">
+					<div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" id="imgProducto" alt="..." /></div>
+					<div class="col-md-6">
+						<div class="small mb-1" id="detalleMarca">Marca: </div>
+						<h1 class="display-5 fw-bolder" id="detalleNombreProd"></h1>
+						<div class="fs-5 mb-5">
+							@*<span class="text-decoration-line-through">$45.00</span>*@
+							<span id="detallePrecio"> USD</span>
+						</div>
+						<p class="lead"> </p>
+						<div class="d-flex">
+
+							@if (Session["Cliente"] != null)
+							{
+								<button class="btn btn-success agregarcarrito flex-shrink-0 w-50" type="button" data-idproducto="0">
+									<i class="fas fa-cart-plus"></i> Agregar al carrito
+								</button>
+							}
+
+						</div>
+
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary me-3" data-bs-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+@section scripts{
+
+	<script>
+		var anadirALista = 0;
+
+		var actual=0;
+		$(document).ready(function () {
+			MostrarCategorias();
+			MostrarProductoCategoria();
+			//Mostrar todos los productos
+			MostrarProducto(0, 0);
+
+
+		})
+
+
+
+
+
+		function MostrarProductoCategoria() {
+
+			jQuery.ajax({
+				url: "@Url.Action("ListarProductoCategoria", "Tienda")",
+				type: "GET",
+				dataType: "json",
+				contentType: "application/json; chartset=utf-8",
+				success: function (response) {
+					//$("#contenedorCategoria").LoadingOverlay("hide");
+					//$("<div>").addClass("form-check").append(
+					//	$("<input>").addClass("form-check-input").attr({ "type": "radio", "name": "categoria", "value": "0", "id": "cx", "checked": "checked" }),
+					//	$("<label>").addClass("form-check-label").text("Todos").attr({ "for": "cx" })
+					//).appendTo("#contenedorCategoria")
+
+					$.each(response.data, function (i, element) {
+						console.log(i);
+						$("<button>").addClass(i === 0 ? " active" : "").attr({ "type": "button", "data-bs-target": "#demo", "data-bs-slide-to": i }).appendTo("#contenedorindicador")
+
+
+
+
+
+
+						$("<div>").addClass("carousel-item" + (i === 0 ? " active" : ""))
+							.attr({ "id": "contentSuperiorProducto" + i })
+							.appendTo("#contentContenido");
+
+						//Agregando a la categoría a la que pertenecen
+						//	< div class="text-center text-black mb-2" >
+						//		<h1 class="display-4 fw-bolder">Productos Disponibles</h1>
+
+						//</div >
+						$("<div>").addClass("text-center text-black mb-2").append($("<h1>").addClass("display-5 fw-bolder text-white").text(element.oCategoria.Descripcion)).appendTo("#contentSuperiorProducto" + i);
+
+						//Uso rejillas para contenedor los elementos:
+						$("<div>").addClass("row").attr({ "id": "fila" + i }).appendTo("#contentSuperiorProducto" + i);
+						//Creo las columnas para fila
+						$("<div>").addClass("col-sm-7").append(
+							$("<img>").attr({ "style": "width:80%", "alt": "producto", "src": "data:image/" + element.Extension + ";base64," + element.Base64 }).addClass("d-block ms-5")
+
+						).appendTo("#fila" + i);
+
+
+						//$("<div>").addClass("col-sm-6 m-0 p-0 overflow-hidden").attr({ "id": "contenProduct" + i }).append(
+						//	$("<img>").attr({ "style": "width:100%", "alt": "producto", "src": "data:image/" + element.Extension + ";base64," + element.Base64 }).addClass("d-block")
+
+
+						//).appendTo("#contentSuperiorProducto" + i)
+
+
+						$("<div>").addClass("col-sm-5").attr({ "id": "contentInfo" + i }).appendTo("#fila" + i)
+						$("<div>").addClass("d-flex justify-content-center align-items-center h-100").attr({ "id": "informacionProd" + i }).append(
+							$("<div>").addClass("card h-40 w-50").append(
+								$("<div>").addClass("card-body p-4").append(
+									$("<div>").addClass("text-center").append(
+										$("<h5>").addClass("fw-bolder").text(element.Nombre),
+										"$ " + element.Precio.toFixed(2) + "USD"
+									)
+								),
+									$("<div>").addClass("card-footer p-4 pt-0 border-top-0 bg-transparent").append(
+										$("<div>").addClass("d-grid gap-2 mt-1").append(
+											@if(Session["Cliente"]!= null)
+											{
+												@:$("<button>").addClass("btn btn-success mt-auto agregarcarrito").data("idproducto", element.IdProducto).text("Agregar a carrito"),
+											}
+
+
+
+											$("<button>").addClass("btn btn-dark mt-auto verproducto").data("idproducto", element.IdProducto).text("Ver Detalle")
+
+										)
+
+
+								)
+									)
+
+
+						).appendTo("#contentInfo"+i)
+
+
+
+
+
+
+
+
+
+
+					});
+
+					//< !--Left and right controls / icons-- >
+					//	<button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+					//		<span class="carousel-control-prev-icon"></span>
+					//	</button>
+					//	<button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+					//		<span class="carousel-control-next-icon"></span>
+					//	</button>
+
+
+
+				},
+				beforeSend: function () {
+
+					//Mientras ejecuta el método que cargue
+					$("#contenedorCategoria").LoadingOverlay("show");
+				}
+
+
+
+
+			})
+		}
+
+
+		function MostrarCategorias() {
+
+			jQuery.ajax({
+				url: "@Url.Action("ListarCategorias","Tienda")",
+				type: "GET",
+				dataType: "json",
+				contentType: "application/json; chartset=utf-8",
+				success: function (response) {
+					//$("#contenedorCategoria").LoadingOverlay("hide");
+					//$("<div>").addClass("form-check").append(
+					//	$("<input>").addClass("form-check-input").attr({ "type": "radio", "name": "categoria", "value": "0", "id": "cx", "checked": "checked" }),
+					//	$("<label>").addClass("form-check-label").text("Todos").attr({ "for": "cx" })
+					//).appendTo("#contenedorCategoria")
+					var iteracion = 0;
+					$.each(response.data, function (i, element) {
+
+						$("<li>").attr({ "id": "item" + i }).append(
+							$("<button>").addClass("dropdown-item").attr({ "type": "button", "value": element.IdCategoria, "data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false", "name": "categoria", "id": "c" + i }).text(element.Descripcion),
+							$("<div>").addClass("dropdown-menu start").attr({ "id": "list" + (anadirALista + 1) })
+
+
+
+
+						).appendTo("#mostrarCatego");
+
+					})
+					//Como predeterminado, ya que como primera opción será "Todos"
+					//Obtiene la función y retorna todas las marcas según Categoría
+
+				},
+				beforeSend: function () {
+
+					//Mientras ejecuta el método que cargue
+					$("#contenedorCategoria").LoadingOverlay("show");
+				}
+
+
+
+
+			})
+		}
+		function MostrarMarca() {
+			//Id Categoria
+
+
+				var _idcategoria = $("button.active").val();
+
+				jQuery.ajax({
+					url: "@Url.Action("ListarMarcaPorCategoria", "Tienda")",
+					type: "POST",
+					data: JSON.stringify({ idcategoria: _idcategoria }),
+					dataType: "json",
+					contentType: "application/json; chartset=utf-8",
+					success: function (response) {
+						//Cada vez que cambie de marca, que se limpie
+						$("#contenedor_marca").html("");
+						$("#contenedor_marca").LoadingOverlay("hide");
+
+
+						$.each(response.data, function (i, element) {
+
+							$("<button>").addClass("dropdown-item").attr({ "type": "button", "value": element.IdMarca, "name": "marca", "id": "m" + i }).text(element.Descripcion).appendTo("#list" + actual)
+
+
+						})
+
+
+					},
+					beforeSend: function () {
+
+						//Mientras ejecuta el método que cargue
+						$("#contenedor_marca").LoadingOverlay("show");
+
+					}
+
+
+
+
+				})
+
+
+
+
+
+		}
+		var clics = localStorage.getItem("clics");
+		var contador = 0;
+
+		if (clics) {
+			contador = parseInt(clics); // Convertir a número entero si existe un valor en localStorage
+		}
+				$(document).on("click", "button[name=categoria]", function () {
+					//		//Cada vez se haga check, debe obtener el id y según ello obtener
+					//		//las marcas
+
+					$(this).prop("disabled", true);
+					$(this).addClass("active");
+					actual = $(this).val();
+					//Validación:
+
+					 // Incrementar el contador en cada clic
+					contador++;
+					console.log(contador);
+					if (contador == 1) {
+						
+						MostrarMarca();
+					}
+					else {
+						$("<div>").addClass("dropdown-menu start").attr({ "id": "list" + (actual) }).appendTo("#mostrarCatego");
+						anadirALista = $(this).val();
+						$(".dropdown-menu .start").css({
+
+							"right": "auto",
+							"left": "100 %",
+							"top": "0",
+							"transform": "translateX(0)"
+						});
+						MostrarMarca();
+						$("div.start").show();
+
+
+					}
+
+
+
+				});
+
+
+		$(document).on("mouseenter", "button[name=marca]", function () {
+
+			$(this).addClass("active");
+
+
+
+		})
+				$(document).on("mouseleave", "button[name=marca]", function () {
+					//		//Cada vez se haga check, debe obtener el id y según ello obtener
+					//		//las marcas
+
+					$("button[name=categoria]").prop("disabled", false);
+					$(this).removeClass("active");
+
+
+
+
+
+		});
+		$(document).on("mouseleave", "div.start", function () {
+
+			$("div.start").remove();
+			$("button[name=marca]").remove();
+			$("button[name=categoria]").removeClass("active");
+
+
+		})
+		$(document).on("mouseenter", "a#submenuLink", function () {
+
+			$("#mostrarCatego").show();
+
+
+		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//function mostrarMa() {
+
+		//	$(document).on("mouseenter", "button[name=categoria]",function () {
+		//		//Cada vez se haga check, debe obtener el id y según ello obtener
+		//		//las marcas
+
+		//		$(this).addClass("active");
+		//		MostrarMarca();
+		//		anadirALista = $(this).val();
+		//		$(".dropdown-menu.start").css({
+
+		//			"right": "auto",
+		//			"left": "100 %",
+		//			"top": "0",
+		//			"transform": "translateX(0)"
+		//		});
+
+		//		$(document).on("mouseleave", "button[name=categoria]", function () {
+		//			//Cada vez se haga check, debe obtener el id y según ello obtener
+		//			//las marcas
+		//			$(this).removeClass("active");
+		//			$("div.start").remove("button[name=marca]");
+
+
+
+		//		})
+
+
+		//	})
+
+		//}
+
+
+
+		//$(document).on("mouseleave", "div.start", function () {
+		//	//Cada vez se haga check, debe obtener el id y según ello obtener
+		//	//las marcas
+		//	$(this).remove();
+
+
+		//})
+
+		function MostrarProducto(_idcategoria, _idmarca) {
+
+			jQuery.ajax({
+				url: "@Url.Action("ListarProducto", "Tienda")",
+				type: "POST",
+				data: JSON.stringify({ idcategoria: _idcategoria, idmarca: _idmarca }),
+				dataType: "json",
+				contentType: "application/json; chartset=utf-8",
+				success: function (response) {
+					//Cada vez que cambie de marca, que se limpie
+					$("#contenedor_producto").html("");
+					$("#contenedor_producto").LoadingOverlay("hide");
+
+					$.each(response.data, function (i, element) {
+						$("<div>").addClass("col mb-5").append(
+							$("<div>").addClass("card h-100").append(
+								$("<img>").addClass("card-img-top").attr({ "src": "data:image/" + element.Extension + ";base64," + element.Base64 }),
+								$("<div>").addClass("card-body p-4").append(
+									$("<div>").addClass("text-center").append(
+										$("<h5>").addClass("fw-bolder").text(element.Nombre),
+										"$ " + element.Precio.toFixed(2) + "USD"
+									)
+								),
+									$("<div>").addClass("card-footer p-4 pt-0 border-top-0 bg-transparent").append(
+										$("<div>").addClass("d-grid gap-2 mt-1").append(
+											@if(Session["Cliente"]!= null)
+											{
+												@:$("<button>").addClass("btn btn-success mt-auto agregarcarrito").data("idproducto", element.IdProducto).text("Agregar a carrito"),
+											}
+
+
+
+											$("<button>").addClass("btn btn-dark mt-auto verproducto").data("idproducto", element.IdProducto).text("Ver Detalle")
+
+										)
+
+
+									)
+							)
+						).appendTo("#contenedor_producto")
+
+					})
+
+
+				},
+				beforeSend: function () {
+
+					//Mientras ejecuta el método que cargue
+					$("#contenedor_producto").LoadingOverlay("show");
+				}
+
+
+
+
+			})
+		}
+
+		$(document).on("click", "button[name=marca]", function () {
+			var _idcategoria = $("button.active").val()
+			var _idmarca = $(this).val()
+			MostrarProducto(_idcategoria, _idmarca);
+			$(this).removeClass("active");
+			$("button[name=categoria]").prop("disabled", false);
+			$("div.start").remove();
+			$("button[name=categoria]").removeClass("active");
+			$("button[name=marca]").remove();
+			$("#mostrarCatego").hide();
+			//$(this).hide();
+
+		})
+
+		$(document).on("mouseenter", "header", function () {
+
+			$("div.start").remove();
+			$("button[name=marca]").remove();
+			$("button[name=categoria]").removeClass("active");
+			$("#mostrarCatego").hide();
+			$("button[name=categoria]").prop("disabled", false);
+
+		})
+
+
+		$(document).on("mouseenter", "section", function () {
+
+			$("div.start").remove();
+			$("button[name=marca]").remove();
+			$("button[name=categoria]").removeClass("active");
+			$("#mostrarCatego").hide();
+			$("button[name=categoria]").prop("disabled", false);
+
+		})
+
+		$(document).on("click", "button.agregarcarrito", function () {
+
+			console.log($(this).data("idproducto"))
+
+			jQuery.ajax({
+					url: "@Url.Action("AgregarCarrito", "Tienda")",
+					type: "POST",
+					data: JSON.stringify({ idproducto: $(this).data("idproducto") }),
+					dataType: "json",
+					contentType: "application/json; charset=utf-8",
+					success: function (data) {
+						if (data.respuesta) {
+							MostrarCantidadCarrito();
+
+							swal({
+								title: "Agregando al carrito",
+								text: "¿Desea ir al carrito",
+								type: "success",
+								showCancelButton: true,
+								confirmButtonClass: "btn-primary",
+								confirmButtonText: "Si",
+								cancelButtonText: "No",
+								closeOnConfirm: true,//Cerrar cuando se de en cancelar
+							},
+								function () {
+									window.location.href = "@Url.Action("Carrito","Tienda")"
+								}
+
+							)
+						}
+						else {
+							swal("", data.mensaje,"warning")
+						}
+					}
+
+
+
+				})
+		})
+		function abrirModal(json) {
+			if (json != null) {
+				console.log(json);
+				//Asignamos datos
+				$.each(json, function (i, element) {
+
+					$("#imgProducto").attr({ "src": "data:image/" + element.Extension + ";base64," + element.Base64 })
+					$("#detalleMarca").text(element.oMarca.Descripcion);
+					$("#detalleNombreProd").text(element.Nombre);
+					$("#detallePrecio").text(element.Precio +" USD");
+
+
+				});
+
+
+
+				//Una vez asignados lo mostramos todo
+				$("#FormModal").modal("show");
+
+			}
+		}
+		$(document).on("click", ".verproducto", function () {
+			jQuery.ajax({
+					url: "@Url.Action("DetalleProducto", "Tienda")",
+					type: "POST",
+					data: JSON.stringify({ idproducto: $(this).data("idproducto") }),
+					dataType: "json",
+					contentType: "application/json; charset=utf-8",
+					success: function (data) {
+
+						abrirModal(data);
+
+					}
+
+
+
+			})
+
+
+
+
+
+
+		});
+
+
+
+
+
+	</script>
+
+
+}
+

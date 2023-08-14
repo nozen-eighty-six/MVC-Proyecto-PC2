@@ -1,0 +1,19 @@
+/*Fuentes*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300&display=swap');
+
+
+
+body{
+    padding: 0;
+    margin: 0;
+}
+
+#fondoVerde{
+    background-color:#43c9c0;
+    font-family: 'Roboto', sans-serif;
+	text-align: center;
+	font-size: 16px;
+	color: #1a1c33;
+    width: 100%;
+}
+

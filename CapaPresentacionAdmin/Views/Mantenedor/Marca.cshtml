@@ -1,0 +1,329 @@
+﻿
+@{
+	ViewBag.Title = "Marca";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ol class="breadcrumb mb-4 mt-4">
+	<li class="breadcrumb-item"><a href="index.html">Mantenimiento</a></li>
+	<li class="breadcrumb-item active">Marca</li>
+</ol>
+
+
+<div class="card">
+	<div class="card-header">
+		@*Margen a la derecha*@
+		<i class="fas fa-table  me-1"> </i> Lista de Marcas
+
+	</div>
+	<div class="card-body">
+		<div class="row">
+			<div class="col-12">
+				<button type="button" class="btn btn-success" onclick="abrirModal(null)">Crear nuevo</button>
+
+			</div> @*//El ancho de la columna*@
+		</div>
+		<hr />
+
+
+
+		<table id="tabla" class="display cell-border" style="width:100%;">
+			<thead>
+				<tr>
+
+					<th>Descripcion</th>
+					<th>Activo</th>
+					<th></th>
+
+				</tr>
+
+			</thead>
+			<tbody>
+				<tr>
+					<td>Hola</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+
+
+	</div>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header bg-dark text-white">
+				<h5 class="modal-title" id="exampleModalLabel">Marca</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body ">
+				@*//g-2 se divida en columnas de 2 *@
+				<input id="txtid" type="text" value="0" autocomplete="off" />@*//Si se mantiene el valor 0, indica que se está empleando
+					el botón crear nuevo usuario, si le damos editar su valor cambiará.*@
+				<div class="row g-1">
+
+					<div class="col-sm-6">
+						@*//Que sea una columna pequeña(sm) y que ocupe la mitad del formulario*@
+						<label for="txtdescripcion" class="form-label">Descripcion</label>
+						<input type="text" class="form-control" id="txtdescripcion" placeholder="Escriba la descripcion" autocomplete="off">
+					</div>
+					<div class="col-sm-6">
+						@*//Que sea una columna pequeña(sm) y que ocupe la mitad del formulario*@
+						<label for="cboactivo" class="form-label">Activo</label>
+						<select class="form-select" id="cboactivo">
+							<option value="1">Si</option>
+							<option value="0">No</option>
+						</select>
+					</div>
+				</div>
+
+				<!--Mensaje de alerta-->
+				<div class="row mt-2">
+					<div class="col-12">
+						<div id="mensajeError" class="alert alert-danger" role="alert">
+							A simple danger alert—check it out!
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+			</div>
+		</div>
+	</div>
+</div>
+@*//script del render*@
+@section scripts{
+	<script>
+		//variables globales
+		var tablaData;
+		var filaSeleccionada;
+
+
+		//Prueba para ver si se están enviando los datos
+		@*jQuery.ajax({
+			//Que tome de referencia el método Get ListarUsuarios del Contr. Home
+			url: '@Url.Action("ListarUsuarios","Home")',
+			type: 'GET',
+			dataType: 'json',
+			contentType: 'application/json; charset=utf-8',
+			success: function (data) {
+				//debugger;//Para que se detenga la aplicación
+				var texto1 = "Soy texto1";
+			//"data" es el valor que recibe del método GET
+				console.log(data);
+			}
+		})*@
+
+		//Diseñamos nuestra tabla
+		tablaData = $("#tabla").DataTable({
+			responsive: true,
+			ordering: false, //para ordenar las columnas
+			//Traer todos los valores
+			"ajax": {
+				//Que tome de referencia el método Get ListarUsuarios del Contr. Home
+			url: '@Url.Action("ListarMarca", "Mantenedor")',
+			type: 'GET',
+			dataType: 'json'
+			},
+			"columns": [
+			//"data" es lo que se envia del controller
+				{ "data": "Descripcion" },
+				{
+					"data": "Activo", "render": function (valor) {
+
+						if (valor) {
+							return '<span class="badge bg-success">Si</span>';
+						}
+						else {
+							return '<span class="badge bg-danger">No</span>';
+						}
+
+					}
+				},
+				{
+					//Columna por defecto
+					"defaultContent": '<button type="button" class="btn btn-primary btn-sm btn-editar"><i class="fas fa-pen "> </i></button>' +
+						'<button type="button" class="btn btn-danger btn-sm ms-2 btn-eliminar"><i class="fas fa-trash "> </i></button>',
+					"orderable": false,
+					"searchable": false,//que no se filtre por estos botones
+					"width": "90px"
+				}
+			],
+			"language": { "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"}
+
+
+
+		});
+
+		function abrirModal(json) {
+			$("#txtid").val(0);//Asignar un valor
+			$("#txtdescripcion").val("");
+			$("#cboactivo").val(1);
+
+			$("#mensajeError").hide();
+			if (json != null) {
+				//Asignamos datos
+				$("#txtid").val(json.IdMarca);
+				$("#txtdescripcion").val(json.Descripcion);
+				$("#cboactivo").val(json.Activo == true ? 1 : 0);//Si es true entonces 1, si no es 0
+
+			}
+			//Una vez asignados lo mostramos todo
+			$("#FormModal").modal("show");
+		}
+		//Usamos el cuerpo de la tabla //Para editar
+		$("#tabla tbody").on("click", '.btn-editar', function () {
+
+			filaSeleccionada = $(this).closest("tr");//Almaceno la fila que se selecciona al dar click al botón
+			//Usamos los datos de la tabla seleccionando una fila específica
+			var data = tablaData.row(filaSeleccionada).data();
+			abrirModal(data);
+
+		}
+
+		);
+		//Usamos el cuerpo de la tabla //Para eliminar
+		$("#tabla tbody").on("click", '.btn-eliminar', function () {
+
+						var marcaSeleccionado = $(this).closest("tr");//Almaceno la fila que se selecciona al dar click al botón
+						//Usamos los datos de la tabla seleccionando una fila específica
+			var data = tablaData.row(marcaSeleccionado).data();
+						console.log(data);
+			swal({
+				title: "¿Está seguro?",
+				text: "¿Desea eliminar la marca?",
+				type: "warning",//Tipo alerta
+				showCancelButton: true,
+				confirmButtonClass: "btn-primary",
+				confirmButtonText: "Si",
+				cancelButtonText: "No",
+				closeOnConfirm: true
+			},
+					function () {
+						jQuery.ajax({
+							//Que tome de referencia el método POST GuardarUsuario del Contr. Home
+							url: '@Url.Action("EliminarMarca", "Mantenedor")',
+							type: 'POST',
+							data: JSON.stringify({ id: data.IdMarca }),//Usamos el id del parámetro Controller y el id de la data (usuarioSelec)
+							dataType: 'json',
+							contentType: 'application/json; charset=utf-8',
+							success: function (data) {//Recibe el return del Controlador
+								debugger;
+								if (data) {
+									//tablaData.row(marcaSeleccionado).draw(true);
+									tablaData.row(marcaSeleccionado).remove().draw();
+									$('#tabla').data.reload();
+									
+									
+								}
+								else {
+									swal("No se puede eliminar", data.mensaje, "error");
+									$('#tabla').data.reload();
+								}
+							},
+							error: function (error) {
+								console.log(error);
+							},
+							beforeSend: function () {
+
+							},
+
+						});
+
+				})
+
+
+
+		});
+		function Guardar() {
+			//Tenemos el Modal abierto, pero ya abierto se establecen valores, si nuevo todo estará vacío, pero si se edita, tendrá nuevos valores. Con ello podemos usar el id para validar
+			var Marca = {
+				//Obtener un valor
+				IdMarca: $("#txtid").val(),
+				Activo: $("#cboactivo").val()==1 ? true : false,
+				Descripcion: $("#txtdescripcion").val()
+
+
+
+			}
+			jQuery.ajax({
+					//Que tome de referencia el método POST GuardarUsuario del Contr. Home
+					url: '@Url.Action("GuardarMarca", "Mantenedor")',
+					type: 'POST',
+					data: JSON.stringify({objeto : Marca}),//Enviamos un objeto Usuario con el mismo name del Controlador
+					dataType: 'json',
+					contentType: 'application/json; charset=utf-8',
+				success: function (data) {//Cuando la ejecución ha sido exitosa
+					$(".modal-body").LoadingOverlay("hide");//Que se oculte
+
+					//MARCA NUEVO
+					if (Marca.IdMarca == 0) {
+						if (data.resultado != 0) {
+							console.log(data);
+							Marca.IdMarca = data.resultado;//Para que se guarde en la dataTable
+							tablaData.row.add(Marca).draw(false);
+							$("#FormModal").modal("hide");
+
+						}
+						else {
+							$("#mensajeError").text(data.mensaje);
+							$("#mensajeError").show();
+						}
+
+
+					}
+					//MARCA EDITADA
+					else {
+						if (data.resultado) {
+							//Selecciona la fila, y toma los valores que se escriben el Modal, esa información es guardada por el
+							//Marca que recibe los atributos de los input
+							tablaData.row(filaSeleccionada).data(Marca).draw(false);
+							filaSeleccionada = null; //Restablezco su valor
+							$("#FormModal").modal("hide");
+						}
+						else {
+							//Se quiere actualizar, pero no ha ingresado algún campo
+							$("#mensajeError").text(data.mensaje);
+							$("#mensajeError").show();
+						}
+
+
+					}
+				},
+				error: function (error) {
+					$("#mensajeError").text("Error Ajax");
+					$("#mensajeError").show();
+					$(".modal-body").LoadingOverlay("hide");//Que se oculte
+				},
+				beforeSend: function () {
+					//Se ejecutará cuando todos las propiedades se hayan ejecutado
+					$(".modal-body").LoadingOverlay("show", {
+						imageResizeFactor: 2,
+						text: "Cargando...",
+						size :14//Tamaño de texto
+					});
+				}
+				//error: function (error) {//Cuando hubo un error en la ejecución
+				//	console.log(error);
+				//}
+				//beforeSend: function () {
+
+				//}
+			})
+
+			//
+			//}
+
+
+
+		}
+	</script>
+
+
+}
+

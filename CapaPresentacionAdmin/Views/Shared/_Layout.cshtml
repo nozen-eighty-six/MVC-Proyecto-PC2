@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+	<!--     Fonts and icons     -->
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+	<!-- Material Icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+	@Styles.Render("~/Content/css")
+	@*@Scripts.Render("~/bundles/modernizr")*@
+</head>
+<body class="g-sidenav-show  bg-gray-100">
+	<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+		<div class="tab-content">
+			<div class="tab-content container active" id="contraer">
+				<div class="sidenav-header">
+					<i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+					<a class="navbar-brand m-0" href="#">
+						<i class="fa fa-tachometer-alt text-white"></i>
+						<span class="ms-1 font-weight-bold text-white">Tienda</span>
+					</a>
+				</div>
+
+				<hr class="horizontal light mt-0 mb-2">
+				<div class="sb-sidenav-menu-heading ms-4 text-secondary">Resumen</div>
+				<div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+					<ul class="navbar-nav">
+
+
+
+
+
+
+						<li class="nav-item">
+							<a class="nav-link text-white " href="@Url.Action("Index", "Home" )">
+
+								<div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+									<i class="fas fa-tachometer-alt opacity-10"></i>
+								</div>
+
+								<span class="nav-link-text ms-1">Dashboard</span>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link text-white" href="@Url.Action("Usuarios", "Home" )">
+
+								<div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+									<i class="fas fa-users opacity-10"></i>
+								</div>
+
+								<span class="nav-link-text ms-1">Usuarios</span>
+							</a>
+						</li>
+						<li class="sb-sidenav-menu-heading ms-4 text-secondary">Mantenimiento</li>
+
+						<li class="nav-item">
+							<a class="nav-link text-white " href="@Url.Action("Categoria", "Mantenedor" )">
+
+								<div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+									<i class="fas fa-table opacity-10"></i>
+								</div>
+
+								<span class="nav-link-text ms-1">Categorias</span>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link text-white " href="@Url.Action("Marca", "Mantenedor" )">
+
+								<div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+									<i class="fas fa-bookmark opacity-10"></i>
+								</div>
+
+								<span class="nav-link-text ms-1">Marcas</span>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link text-white " href="@Url.Action("Producto", "Mantenedor" )">
+
+								<div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+									<i class="fas fa-boxes opacity-10"></i>
+								</div>
+
+								<span class="nav-link-text ms-1">Productos</span>
+							</a>
+						</li>
+
+
+
+
+
+					</ul>
+				</div>
+
+
+			</div>
+		</div>
+
+	</aside>
+	<main class="main-content border-radius-lg ">
+		<!-- Navbar -->
+		<nav class="sb-topnav navbar navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl">
+			<ul>
+				<li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+					<a class="nav-link text-body p-0" data-bs-toggle="tab" href="#contraer" id="iconNavbarSidenav">
+						<div class="sidenav-toggler-inner">
+							<i class="sidenav-toggler-line"></i>
+							<i class="sidenav-toggler-line"></i>
+							<i class="sidenav-toggler-line"></i>
+						</div>
+					</a>
+				</li>
+
+			</ul>
+			<ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0 ">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle mb-0" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user active"></i></a>
+					<ul class="dropdown-menu dropdown-menu-end position-absolute mt-0" aria-labelledby="navbarDropdown">
+						<li><a class="dropdown-item" href="#!">Correo del usuario</a></li>
+
+						<li><hr class="dropdown-divider" /></li>
+						<li><a class="dropdown-item" href="@Url.Action(" CerrarSesion", "Acceso" )">Cerrar Sesión</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+
+		<div id="layoutSidenav" class="ms-0">
+			<div id="layoutSidenav_content">
+				<main>
+					<div class="container-fluid py-4  px-4 mt-0 ms-2">
+						@*Contenido de la página*@
+						@RenderBody()
+					</div>
+				</main>
+				<footer class="py-4 bg-light mt-auto">
+					<div class="container-fluid px-4 me-2">
+						<div class="d-flex align-items-center justify-content-between small">
+							<div class="text-muted">Copyright &copy; Your Website 2023</div>
+							<div>
+								<a href="#">Privacy Policy</a>
+								&middot;
+								<a href="#">Terms &amp; Conditions</a>
+							</div>
+						</div>
+					</div>
+				</footer>
+			</div>
+
+
+
+
+
+
+		</div>
+	</main>
+
+
+	@*@RenderBody()
+	<li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+	<li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+	<li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+	<li>@Html.ActionLink("Pagina de pruebas", "PruebaTest", "Home")</li>*@
+
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/Complementos")
+	@Scripts.Render("~/bundles/bootstrap")
+	@RenderSection("scripts", required: false)
+</body>
+</html>

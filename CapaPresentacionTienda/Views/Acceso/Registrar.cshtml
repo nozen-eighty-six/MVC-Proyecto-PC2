@@ -1,0 +1,110 @@
+﻿@model CapaIdentidad.Cliente
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>prueba</title>
+	<link href="~/Content/Sites.css" rel="stylesheet" />
+	<link href="~/Content/loginPruebaRegistrar.css" rel="stylesheet" />
+
+</head>
+<body>
+	<!-- Main Content -->
+	<div class="container-fluid">
+		<div class="row main-content bg-success text-center">
+			<div class="col-md-5 text-center company__info" id="contenImg">
+				<img src="~/Models/logo.jpeg" id="imgLogo" />
+			</div>
+			<div class="col-md-7 col-xs-12 col-sm-12 login_form ">
+				<div class="container-fluid">
+					<div class="row">
+						<h2>Login</h2>
+					</div>
+					<div class="row mt-2">
+
+						<form action="@Url.Action("Registrar","Acceso")" method="post">
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<div class="form-floating mb-3 mb-md-0">
+										@Html.TextBoxFor(m => m.Nombres, new { @Class = "form-control", @id = "txtnombre", @placeholder = ".", value = ViewData["nombre"] })
+										@Html.Label("txtnombre", "Nombres")
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-floating">
+										@Html.TextBoxFor(m => m.Apellidos, new { @Class = "form-control", @id = "txtapellidos", @placeholder = ".", value = ViewData["apellidos"] })
+										@Html.Label("txtapellidos", "Apellidos")
+									</div>
+								</div>
+							</div>
+							<div class="form-floating mb-3">
+								@Html.TextBoxFor(m => m.Correo, new { @Class = "form-control", @id = "txtcorreo", @placeholder = ".", value = ViewData["correo"] })
+								@Html.Label("txtcorreo", "Correo")
+							</div>
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<div class="form-floating mb-3 mb-md-0">
+										@Html.PasswordFor(m => m.Clave, new { @Class = "form-control", @id = "txtclave", @placeholder = "." })
+										@Html.Label("txtclave", "Contraseña")
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-floating mb-3 mb-md-0">
+										@Html.PasswordFor(m => m.ConfirmarClave, new { @Class = "form-control", @id = "txtconfirmarclave", @placeholder = "." })
+										@Html.Label("txtconfirmarclave", "Confirmar Contraseña")
+									</div>
+								</div>
+							</div>
+							@{
+								if (ViewBag.Error != null)
+								{
+									<div class="row mb-3">
+										<div class="alert alert-danger" role="alert">
+											@ViewBag.Error
+										</div>
+									</div>
+								}
+
+							}
+							<div class="mt-4 mb-0 d-flex justify-content-center">
+								<button class="btn btn-block" type="submit">Crear Cuenta</button>
+							</div>
+						</form>
+					</div>
+					<div class="card-footer text-center py-3">
+						<div class="small"><a href="@Url.Action("Index","Acceso")">¿Ya tienes una cuenta? Iniciar Sesión</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// Obtenemos el div y la imagen por sus IDs
+		const div = document.getElementById('contenImg');
+		const imagen = document.getElementById('imgLogo');
+
+		// Función para ajustar la imagen al tamaño del div
+		function ajustarImagen() {
+			const divAncho = div.offsetWidth;
+			const divAlto = div.offsetHeight;
+
+			// Establecemos el tamaño de la imagen igual al tamaño del div
+			imagen.style.width = divAncho + 'px';
+			imagen.style.height = divAlto + 'px';
+		}
+
+		// Llamamos a la función al cargar la página y cada vez que cambie el tamaño del div
+		ajustarImagen();
+		window.addEventListener('resize', ajustarImagen);
+
+
+
+	</script>
+</body>
+</html>
