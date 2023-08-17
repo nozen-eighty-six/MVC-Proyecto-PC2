@@ -132,10 +132,11 @@
 			},
 			"columns": [
 			//"data" es lo que se envia del controller
-				{ "data": "Descripcion" },
+				{ "data": "Descripcion", "width": "300px" },
 				{
-					"data": "Activo", "render": function (valor) {
+					"data": "Activo", "width": "90px","render": function (valor) {
 
+						
 						if (valor) {
 							return '<span class="badge bg-success">Si</span>';
 						}
